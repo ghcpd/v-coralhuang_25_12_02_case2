@@ -1,0 +1,141 @@
+
+# Task: Refactor and Extend the User Display Module for High Performance and Maintainability
+
+You are responsible for transforming the baseline Python module into a fast, extensible, maintainable system. The goal is to significantly improve performance, code clarity, robustness, and functionality, while preserving backward compatibility at the interface level.
+
+Platform-specific behavior is not the focus—the priority is **architectural quality, speed, error handling, and new capabilities**.
+
+---
+
+# What Must Be Improved
+
+The baseline implementation contains multiple issues (poor complexity, slow operations, redundant logic). Specifically:
+
+* Inefficient string concatenation inside loops
+* Artificial `time.sleep` delays reducing throughput
+* Repeated extraction of dictionary fields
+* Linear `get_user_by_id()` search (O(n) without indexing)
+* Unclear, deeply nested filtering logic
+* Temporary string allocations in exporters
+* No error handling or structured logging
+* No modular design
+
+---
+
+# Required Refactoring Goals
+
+You must deliver a significantly improved system with the following characteristics:
+
+### 1. High Performance
+
+* 20–100× faster processing than the baseline
+* Zero artificial delays
+* String construction optimized using buffered patterns
+* O(1) user lookups using an indexed store
+* Export and display operations must operate in linear time with minimal temporary allocations
+
+### 2. Maintainable Architecture
+
+* Full type hints for all public functions
+* Structured docstrings (Google or NumPy style)
+* Well-organized modules and internal helpers
+* Reduced cyclomatic complexity
+* Exceptions handled gracefully without terminating execution
+* Centralized logging with consistent `[MARKER]` patterns
+
+### 3. Functional Enhancements (New Requirements)
+
+You must implement **new functionality**, not just refactor the old code:
+
+* Configurable output formatting profiles (e.g., compact, verbose, JSON-like)
+
+* Optional field-selection for display/export (e.g., only show name + status)
+
+* A reusable in-memory `UserStore` class that:
+
+  * builds indexed lookups
+  * supports snapshotting and deep copying
+  * exposes iterators for efficient streaming
+
+* A filtering system that supports:
+
+  * multiple combined criteria
+  * partial-match rules (name contains, role prefix, etc.)
+  * optional case sensitivity
+  * extendability for future criteria without modifying existing logic
+
+### 4. Robust Error Handling
+
+* Missing keys must not crash the system
+* Errors are logged with clear markers, but output should continue
+* Recover from malformed user entries gracefully
+* Allow pluggable validation functions
+
+---
+
+# Deliverables
+
+### 1. `user_display_original.py`
+
+The unchanged baseline implementation (the file provided above).
+
+### 2. `user_display_optimized.py`
+
+A fully rewritten, optimized, extensible version including:
+
+* `UserStore` class
+* Efficient string assembly
+* Index-based lookup maps
+* Flexible formatting and filtering
+* Unified logger and structured errors
+* Strict type hints and docstrings
+
+### 3. Tests (`tests/test_user_display.py`)
+
+Tests should cover:
+
+* Normal operations and edge cases
+* Missing keys and malformed entries (must not crash)
+* New formatting modes
+* Multi-criteria filtering
+* Correct logging behavior
+* Performance sanity checks for large datasets (e.g., 1,000–5,000 users)
+
+**No coverage threshold is required**, but the tests must be thorough and demonstrate reliability.
+
+### 4. Supporting Project Files
+
+You must provide:
+
+* `requirements.txt` (minimal, pinned versions)
+* `README.md` explaining:
+
+  * the baseline weaknesses
+  * the refactoring strategy
+  * new features
+  * performance comparison
+  * example usage
+
+Scripts and Docker support are optional, but encouraged for completeness.
+
+---
+
+# Performance Targets
+
+| Operation               | Target  |
+| ----------------------- | ------- |
+| Display 1,000 users     | < 100ms |
+| Filter 1,000 users      | < 10ms  |
+| `get_user_by_id` lookup | < 1ms   |
+
+---
+
+# Execution Plan
+
+1. Analyze the baseline file and list all architectural problems
+2. Create `UserStore` and redesign module layout
+3. Implement optimized functions with enhanced features
+4. Add robust error handling and structured logging
+5. Write comprehensive tests for legacy and new behavior
+6. Produce documentation and performance comparison
+7. Validate on large synthetic user datasets
