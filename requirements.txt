@@ -1,0 +1,13 @@
+# User Display Module - Requirements
+
+# Testing framework
+pytest==7.4.3
+
+# No additional runtime dependencies required
+# The optimized module uses only Python standard library:
+# - logging (structured logging)
+# - typing (type hints)
+# - dataclasses (UserStore, FilterCriteria)
+# - io (StringIO for buffered string construction)
+# - copy (deep copying for snapshots)
+# - enum (FormatProfile enum)
