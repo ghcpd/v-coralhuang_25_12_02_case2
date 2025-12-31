@@ -1,0 +1,24 @@
+# Task: Refactor and Extend the User Display Module for High Performance and Maintainability
+
+You are responsible for transforming the baseline Python module into a fast, extensible, maintainable system. The goal is to significantly improve performance, code clarity, robustness, and functionality, while preserving backward compatibility at the interface level.
+
+Platform-specific behavior is not the focus—the priority is **architectural quality, speed, error handling, and new capabilities**.
+
+---
+
+# What Must Be Improved
+
+The baseline implementation contains multiple issues (poor complexity, slow operations, redundant logic). Specifically:
+
+* Inefficient string concatenation inside loops
+* Artificial `time.sleep` delays reducing throughput
+* Repeated extraction of dictionary fields
+* Linear `get_user_by_id()` search (O(n) without indexing)
+* Unclear, deeply nested filtering logic
+* Temporary string allocations in exporters
+* No error handling or structured logging
+* No modular design
+
+---
+
+# Required Refactoring Goals
